@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-macos:
+  build:
     runs-on: macos-latest
     
     steps:
@@ -22,11 +22,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Verify Java and jpackage
-      run: |
-        java -version
-        jpackage --version
-        
     - name: Build KEmulator.app with bundled JRE
       run: |
         ./package-jpackage.sh
@@ -37,104 +32,11 @@ jobs:
         
     - name: Create app bundle archive
       run: |
-        zip -r KEmulator-macos-${{ github.sha }}.zip KEmulator.app
+        zip -r KEmulator-macos.zip KEmulator.app
         
     - name: Upload app bundle artifact
       uses: actions/upload-artifact@v4
       with:
-        name: KEmulator-macos-${{ github.sha }}
-        path: KEmulator-macos-${{ github.sha }}.zip
-        retention-days: 30
-        
-    - name: Upload to release (on tag)
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: KEmulator-macos-${{ github.sha }}.zip
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-  build-cross-platform:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [linux, windows]
-        
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Java 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        
-    - name: Build cross-platform package
-      run: |
-        # Download KEmulator
-        curl -L -o kemnnx64.v2.20.zip https://github.com/shinovon/KEmulator/releases/download/v2.20/kemnnx64.v2.20.zip
-        unzip -q kemnnx64.v2.20.zip
-        
-        # Create input directory
-        mkdir -p input
-        cp kemnnx64/KEmulator.jar input/
-        cp kemnnx64/sensorsimulator.jar input/ 2>/dev/null || true
-        cp kemnnx64/builder.jar input/ 2>/dev/null || true
-        cp -r kemnnx64/lang input/ 2>/dev/null || true
-        cp -r kemnnx64/uei input/ 2>/dev/null || true
-        
-        # Copy platform-specific libraries
-        if [ "${{ matrix.os }}" = "linux" ]; then
-          cp kemnnx64/lwjgl*-natives-linux*.jar input/ 2>/dev/null || true
-          cp kemnnx64/swt-gtk-*.jar input/ 2>/dev/null || true
-          find kemnnx64 -name "*.so" -exec cp {} input/ \; 2>/dev/null || true
-        elif [ "${{ matrix.os }}" = "windows" ]; then
-          cp kemnnx64/lwjgl*-natives-windows*.jar input/ 2>/dev/null || true
-          cp kemnnx64/swt-win32-*.jar input/ 2>/dev/null || true
-          find kemnnx64 -name "*.dll" -exec cp {} input/ \; 2>/dev/null || true
-        fi
-        
-        # Build with jpackage
-        jpackage \
-          --type app-image \
-          --input input \
-          --name KEmulator \
-          --main-jar KEmulator.jar \
-          --app-version 2.20 \
-          --description "J2ME Emulator for mobile Java applications and games" \
-          --vendor "nnproject" \
-          --java-options "-Djna.nosys=true" \
-          --java-options "-Dfile.encoding=UTF-8" \
-          --java-options "-javaagent:\$APPDIR/KEmulator.jar" \
-          --java-options "-XX:+IgnoreUnrecognizedVMOptions" \
-          --java-options "-Xmx512M" \
-          --java-options "--add-opens" \
-          --java-options "java.base/java.lang=ALL-UNNAMED" \
-          --java-options "--add-opens" \
-          --java-options "java.base/java.lang.reflect=ALL-UNNAMED" \
-          --java-options "--add-opens" \
-          --java-options "java.base/java.lang.ref=ALL-UNNAMED" \
-          --java-options "--add-opens" \
-          --java-options "java.base/java.io=ALL-UNNAMED" \
-          --java-options "--add-opens" \
-          --java-options "java.base/java.util=ALL-UNNAMED" \
-          --java-options "--enable-native-access=ALL-UNNAMED" \
-          --arguments "-s"
-          
-    - name: Create archive
-      run: |
-        if [ "${{ matrix.os }}" = "linux" ]; then
-          tar -czf KEmulator-${{ matrix.os }}-${{ github.sha }}.tar.gz KEmulator
-        else
-          zip -r KEmulator-${{ matrix.os }}-${{ github.sha }}.zip KEmulator
-        fi
-        
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: KEmulator-${{ matrix.os }}-${{ github.sha }}
-        path: KEmulator-${{ matrix.os }}-${{ github.sha }}.*
+        name: KEmulator-macos
+        path: KEmulator-macos.zip
         retention-days: 30
