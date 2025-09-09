@@ -19,16 +19,34 @@ if [ -d "$BUILD_DIR" ]; then
     rm -rf "$BUILD_DIR"
 fi
 
-# Remove existing app bundle (but keep the structure we committed)
-if [ -d "$APP_BUNDLE/Contents/Resources" ]; then
-    echo "Cleaning app bundle resources..."
-    # Remove all files but keep directory structure
-    find "$APP_BUNDLE/Contents/Resources" -type f -delete 2>/dev/null || true
-    find "$APP_BUNDLE/Contents/Resources" -type d -empty -delete 2>/dev/null || true
+# Remove existing app bundle completely for clean build
+if [ -d "$APP_BUNDLE" ]; then
+    echo "Removing existing app bundle..."
+    rm -rf "$APP_BUNDLE"
 fi
 
-echo "Running fresh package build..."
-./package.sh
+# Ask user which build method to use
+echo ""
+echo "Choose build method:"
+echo "1) jpackage (recommended - self-contained with bundled JRE)"
+echo "2) manual (legacy - requires system Java)"
+echo ""
+read -p "Enter choice (1 or 2): " choice
+
+case $choice in
+    1)
+        echo "Building with jpackage..."
+        ./package-jpackage.sh
+        ;;
+    2)
+        echo "Building with manual packaging..."
+        ./package.sh
+        ;;
+    *)
+        echo "Invalid choice. Defaulting to jpackage..."
+        ./package-jpackage.sh
+        ;;
+esac
 
 echo ""
 echo "Running verification..."
