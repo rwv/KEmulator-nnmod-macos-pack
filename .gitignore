@@ -1,0 +1,16 @@
+# Temporary download files
+kemulator_download/
+/tmp/
+
+# macOS files
+.DS_Store
+*.dmg
+
+# Build artifacts
+build/
+dist/
+
+# Backup files
+*~
+*.bak
+*.orig

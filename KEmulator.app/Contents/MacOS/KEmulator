@@ -1,0 +1,96 @@
+#!/bin/bash
+# KEmulator macOS .app launcher script
+# Based on kemulator.sh from KEmulator v2.20
+
+# Exit on error
+set -e
+
+# Get the absolute path to the .app bundle
+BUNDLE_PATH="$(cd "$(dirname "$0")/../.." && pwd)"
+RESOURCES_DIR="$BUNDLE_PATH/Contents/Resources"
+
+# any available from PATH
+JAVA="java"
+
+# Try to find Java 8 in common macOS locations
+if [ -x "/usr/libexec/java_home" ]; then
+    # Use java_home to find the best Java 8 installation
+    if JAVA8_HOME=$(/usr/libexec/java_home -v 1.8 2>/dev/null); then
+        JAVA="$JAVA8_HOME/bin/java"
+    elif JAVA11_HOME=$(/usr/libexec/java_home -v 11 2>/dev/null); then
+        JAVA="$JAVA11_HOME/bin/java"
+    elif JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
+        JAVA="$JAVA_HOME/bin/java"
+    fi
+fi
+
+# Check Java version
+JAVA_VER=$($JAVA -version 2>&1 | awk -F '"' '/version/ {print $2}' | awk -F '.' '{sub("^$", "0", $2); print $1$2}')
+
+# Path to KEmulator JAR
+KEM_JAR="$RESOURCES_DIR/KEmulator.jar"
+
+# Check if KEmulator.jar exists
+if [ ! -f "$KEM_JAR" ]; then
+    # Show error dialog using AppleScript
+    osascript -e 'display dialog "KEmulator.jar not found in application bundle.\n\nPlease ensure the application is properly installed." with title "KEmulator Error" buttons {"OK"} default button "OK" with icon stop'
+    exit 1
+fi
+
+# Hotspot configuration
+XMX="-Xmx512M"
+ARGS=(
+  "$XMX"
+  "-Djna.nosys=true"
+  "-Djava.library.path=$RESOURCES_DIR"
+  "-Dfile.encoding=UTF-8"
+  "-javaagent:$KEM_JAR"
+  "-XX:+IgnoreUnrecognizedVMOptions"
+  "-XstartOnFirstThread"
+)
+
+# Java 9+ specific arguments
+if [ "$JAVA_VER" -ge 90 ]; then
+  ARGS+=(
+    "--add-opens" "java.base/java.lang=ALL-UNNAMED"
+    "--add-opens" "java.base/java.lang.reflect=ALL-UNNAMED"
+    "--add-opens" "java.base/java.lang.ref=ALL-UNNAMED"
+    "--add-opens" "java.base/java.io=ALL-UNNAMED"
+    "--add-opens" "java.base/java.util=ALL-UNNAMED"
+    "--enable-native-access=ALL-UNNAMED"
+  )
+fi
+
+# Change to Resources directory for proper library loading
+cd "$RESOURCES_DIR"
+
+# Handle different launch scenarios
+if [ -z "$1" ]; then
+    # Run without arguments
+    "$JAVA" "${ARGS[@]}" -jar "$KEM_JAR" -s
+elif [[ "$1" == "-new-project" || "$1" == "-restore" || "$1" == "-convert" || "$1" == "-edit" ]]; then
+    # Utils for IntelliJ IDEA
+    CALL_PWD="$PWD"
+    "$JAVA" "${ARGS[@]}" -jar "$KEM_JAR" "$1" "$CALL_PWD" -s
+elif [[ "$1" == -* ]]; then
+    # Direct configuration (jad, classpath, etc)
+    "$JAVA" "${ARGS[@]}" -jar "$KEM_JAR" -s "$@"
+else
+    # JAR file for launch - handle files passed via Finder
+    if [[ "$1" == /* ]]; then
+        # Already absolute path
+        USER_JAR="$1"
+    else
+        # Make relative path absolute
+        USER_JAR="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+    fi
+    
+    # Check if the JAR file exists
+    if [ ! -f "$USER_JAR" ]; then
+        osascript -e "display dialog \"File not found: $USER_JAR\" with title \"KEmulator Error\" buttons {\"OK\"} default button \"OK\" with icon stop"
+        exit 1
+    fi
+    
+    shift
+    "$JAVA" "${ARGS[@]}" -jar "$KEM_JAR" -jar "$USER_JAR" -s "$@"
+fi
