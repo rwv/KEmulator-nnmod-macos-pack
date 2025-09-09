@@ -1,0 +1,421 @@
+#KEmulator nnmod localization file
+#Russian
+#by shinovon
+
+#Main Frame
+
+MENU_MIDLET=Мидлет
+MENU_TOOL=Функции
+MENU_VIEW=Вид
+
+MENU_MIDLET_LOAD_JAR=Открыть jar...
+MENU_MIDLET_LOAD_AUTO_PLAY=Открыть запись
+MENU_MIDLET_RECENTLY=Последние файлы
+MENU_MIDLET_2D_ENGINE=Движок 2D
+MENU_MIDLET_M3G_ENGINE=Движок M3G
+MENU_MIDLET_M3D_ENGINE=Движок MascotCapsule
+
+MENU_MIDLET_JAD=Открыть JAD в блокноте
+MENU_MIDLET_SUSPEND=Приостановить
+MENU_MIDLET_RESUME=Возобновить
+MENU_MIDLET_PAUSE_STEP=Пауза/Шаг
+MENU_MIDLET_PLAY_RESUME=Продолжить
+
+MENU_MIDLET_RESTART=Перезапуск
+MENU_MIDLET_EXIT=Выход
+
+
+MENU_VIEW_INFO=Выделение
+MENU_VIEW_XRAY=X-Ray
+MENU_VIEW_TOP=Поверх всех окон
+MENU_VIEW_ROTATE=Повернуть экран
+MENU_VIEW_FORCE_PAINT=Принудительно обновить
+MENU_VIEW_ROTATE_90=Повернуть экран на 90 гр.
+
+MENU_VIEW_KEYPAD=Окно кейпада
+MENU_VIEW_WATCHES=Классы
+MENU_VIEW_PROFILER=Профайлер
+MENU_VIEW_METHODS=Методы
+MENU_VIEW_MEMORY=Просмотр памяти
+MENU_VIEW_M3GVIEW=Просмотр M3G
+MENU_VIEW_SMS=SMS консоль
+MENU_VIEW_SENSOR=Симулятор акселерометра
+MENU_VIEW_LOG=Логи
+
+MENU_VIEW_OPTIONS=Опции...
+MENU_VIEW_HELP=О программе
+
+MENU_TOOL_ZOOMIN=Увеличить
+MENU_TOOL_ZOOMOUT=Уменьшить
+MENU_TOOL_INTERPOSE=Интерполяция
+MENU_TOOL_INTER_NEAREST=NearestNeighbor
+MENU_TOOL_INTER_HIGH=HighQuality
+MENU_TOOL_INTER_LOW=LowQuality
+
+MENU_TOOL_RESIZE_MODE=Отображение
+MENU_TOOL_RESIZE_MODE_CENTER=Без адаптации к окну
+MENU_TOOL_RESIZE_MODE_SYNC=Синхронизировать размер
+MENU_TOOL_RESIZE_MODE_FILL=Заполнить свободное место
+MENU_TOOL_RESIZE_MODE_FILL_INT=Заполнить (Целочисленный масштаб)
+MENU_TOOL_RESIZE_KEEP_PROPORTIONS=Сохранять пропорции
+MENU_TOOL_RESIZE_RESET=Сбросить размер окна
+MENU_TOOL_RESIZE_SET=Изменить размер экрана
+
+MENU_TOOL_SPEEDUP=Ускорить
+MENU_TOOL_SPEEDDOWN=Замедлить
+
+MENU_TOOL_RECORD_KEY=Запись клавиш
+MENU_TOOL_AUTO_PLAY=Прогр. записи
+MENU_TOOL_CAPTURE_FILE=Скриншот в файл
+MENU_TOOL_CAPTURE_CLIP=Скриншот в буфер обмена
+
+MENU_TOOL_SHOW_TRACK_INFO=Вкл. отслеживание вызовов
+
+MENU_TOOL_QWERTY_MODE=Режим QWERTY
+MENU_TOOL_FPS_MODE=Режим FPS
+MENU_TOOL_DISABLE_NETWORK_ACCESS=Отключить доступ к сети
+
+#Command bar
+
+MAIN_INFO_BAR_UNLOADED=ОЖИДАНИЕ
+MAIN_INFO_BAR_RUNNING=ЗАПУЩЕН
+MAIN_INFO_BAR_PAUSED=ПАУЗА
+
+#Dialog
+
+SAVE_TO_FILE=Сохранить
+OPEN_JAR_FILE=Открыть JAR
+OPEN_REC_FILE=Открыть запись
+LINK_JAR_FILE=Открыть JAR
+
+DIALOG_OK=OK
+DIALOG_CANCEL=Отмена
+DIALOG_SET=ОК
+DIALOG_YES=Да
+DIALOG_NO=Нет
+
+
+#Info show
+
+INFO_FRAME_POS=Pos
+INFO_FRAME_COLOR=Color
+INFO_FRAME_RECT=R
+
+
+#About Frame
+
+ABOUT_FRAME_TITLE=О программе
+ABOUT_INFO_EMULATOR=Эмулятор J2ME
+ABOUT_INFO_APIS=Поддерживаемые API
+
+ABOUT_AUTHOR=Автор
+ABOUT_CHACK_NEW_VER=Check new version
+ABOUT_ONLINE_MANUAL=Online Manual
+
+
+#Keypad
+
+KEYPAD_FRAME_TITLE=Кейпад
+KEYPAD_FRAME_LSK=ЛСК
+KEYPAD_FRAME_RSK=ПСК
+
+
+#M3G View
+
+M3G_VIEW_TITLE   = M3G View
+M3G_VIEW_CAMERA  = Camera
+M3G_VIEW_LIGHT   = Light
+M3G_VIEW_DISPLAY = Display
+
+M3G_VIEW_LIGHT_SCENE   = Scene Graphics
+M3G_VIEW_LIGHT_VIEW    = Viewer Light
+M3G_VIEW_LIGHT_SETTING = Light Setting
+
+M3G_VIEW_CAMERA_ORBIT  = Orbit
+M3G_VIEW_CAMERA_PAN    = Pan
+M3G_VIEW_CAMERA_DOLLY  = Dolly
+M3G_VIEW_CAMERA_ZOOM   = Zoom
+M3G_VIEW_CAMERA_PROJECTION  = Projection Mode
+M3G_VIEW_CAMERA_PERSPECTIVE = Perspective Projection
+M3G_VIEW_CAMERA_PARALLEL    = Parallel Projection
+
+M3G_VIEW_CAMERA_CLIP_PLANES   = Clipping Planes
+M3G_VIEW_CAMEAR_FIELD_OF_VIEW = Field of View
+M3G_VIEW_CAMEAR_POSITION      = Camera Position
+M3G_VIEW_CAMEAR_RESET         = Reset Camera
+
+M3G_VIEW_DISPLAY_COORDINATE   = Coordinate Axis
+M3G_VIEW_DISPLAY_SHOW_GRID    = Show Grid
+M3G_VIEW_DISPLAY_SHOW_XRAY    = Show Xray
+M3G_VIEW_DISPLAY_UPDATE_WORLD=Update World
+
+
+#Log Frame
+
+LOG_FRAME_TITLE=Логи
+
+
+#MemoryView
+
+MEMORY_VIEW_TITLE=MemoryView
+MEMORY_VIEW_UPDATE=Обновить
+MEMORY_VIEW_AUTO_UPDATE=Авто обновление
+MEMORY_VIEW_BYTECODE_SIZE=Размер байткода:
+MEMORY_VIEW_TOTALMEM_SIZE=Общий размер:
+MEMORY_VIEW_OBJECT_SIZE=Размер объектов:
+MEMORY_VIEW_MAX_OBJECT_SIZE=Макс. размер объектов:
+MEMORY_VIEW_INTERVAL=Интервал (мс):
+
+MEMORY_VIEW_IMAGES=Изображения
+MEMORY_VIEW_SOUNDS=Плееры
+
+MEMORY_VIEW_ZOOM=Масш.:
+MEMORY_VIEW_SORT=Сорт.:
+MEMORY_VIEW_SIZE=Размер
+MEMORY_VIEW_ASCEND=По возрастанию
+MEMORY_VIEW_IMAGES_DRAWN=Отрисованные изобр.
+MEMORY_VIEW_UNUSED_REGION=Затемнять неисп. области
+MEMORY_VIEW_RESET_IMAGE=Сброс истории исп.
+MEMORY_VIEW_IMAGE_NEVER_DRAW=Неотрисованные изобр.
+MEMORY_VIEW_RELEASED_IMAGES=Удаленные изобр.
+MEMORY_VIEW_CLEAR_RELEASED_IMAGES=Очис. удален. изобр.
+
+MEMORY_VIEW_SORT_REFERENCE=По референсу
+MEMORY_VIEW_SORT_SIZE=По размеру
+MEMORY_VIEW_SORT_DRAW_COUNT=По кол-ву отрисовок
+
+MEMORY_VIEW_SAVE_AS=Сохранить как...
+MEMORY_VIEW_SAVE_TO_FILE=Сохранить в файл
+MEMORY_VIEW_SAVE_ALL=Сохранить все изображения...
+MEMORY_VIEW_SAVE_ALL_IMAGES=Сохранить все
+MEMORY_VIEW_CHOOSE_DIRECTORY=Выбор папки
+
+MEMORY_VIEW_SOUND_START=Старт
+MEMORY_VIEW_SOUND_PAUSE=Пауза
+MEMORY_VIEW_SOUND_STOP=Стоп
+MEMORY_VIEW_SOUND_VOLUME=Уровень:
+MEMORY_VIEW_SOUND_PROGRESS=Прогресс:
+MEMORY_VIEW_SOUND_EXPORT=Экспорт
+
+MEMORY_VIEW_INSTANCE=Instance
+MEMORY_VIEW_CONTENT_TYPE=ContentType
+MEMORY_VIEW_STATE=Состояние
+MEMORY_VIEW_LOOP_COUNT=LoopCount
+MEMORY_VIEW_DATA_SIZE=Размер данных
+
+MEMORY_VIEW_CLASS=Class
+MEMORY_VIEW_INSTANCES=Instances
+MEMORY_VIEW_TOTAL_HEAP_SIZE=Total Heap Size
+MEMORY_VIEW_REFERENCE=Reference
+
+
+#SMS Console
+
+SMS_CONSOLE_TITLE=SMS консоль
+
+SMS_CONSOLE_SEND_TO=Отправить в мидлет
+SMS_CONSOLE_CLEAR=Очистить
+SMS_CONSOLE_SEND=Отправить
+SMS_CONSOLE_RECEIVE=Получить от мидлета
+SMS_CONSOLE_BLOCK=Заблокировать полученное
+
+
+#Methods Frame
+
+METHOD_FRAME_TITLE=Методы
+
+METHOD_FRAME_RESET_CALLS=Сбросить вызовы
+METHOD_FRAME_EXPORT_BYTECODE=Экспорт байткода
+METHOD_FRAME_SAVE_BYTECODE=Сохранить байткод всех методов:
+METHOD_FRAME_SEARCH=Поиск
+
+#Waches Frame
+
+WATCHES_FRAME_TITLE=Class Watcher
+WATCHES_FRAME_PROFILER=Профайлер
+
+
+#Option Frame
+
+OPTION_FRAME_TITLE=Опции
+
+OPTION_TAB_CUSTOM=Общее
+OPTION_TAB_KEYMAP=Управление
+OPTION_TAB_FONT=Шрифт
+OPTION_TAB_SYSTEM=System
+OPTION_TAB_COREAPI=CoreAPI
+OPTION_TAB_DISABLE_API=Выкл. API
+OPTION_TAB_RECORDS=Сохранения
+OPTION_TAB_NETWORK=Сеть
+OPTION_TAB_MEDIA=Медиа
+OPTION_TAB_M3G=M3G
+OPTION_TAB_MASCOT=MascotCapsule
+OPTION_TAB_SECURITY=Разрешения
+OPTION_TAB_SYSTEM_PROPERTIES=Properties
+
+OPTION_CUSTOM_DEVICE=Пресет устройства:
+OPTION_CUSTOM_ENCODING=Кодировка MIDP:
+OPTION_CUSTOM_LOCALE=Локаль MIDP:
+OPTION_CUSTOM_MAX_FPS=Лимит FPS:
+
+OPTION_CUSTOM_PROPERTIES=Настройки канваса
+OPTION_CUSTOM_SCREEN_WIDTH=Ширина:
+OPTION_CUSTOM_SCREEN_HEIGHT=Высота:
+OPTION_CUSTOM_KEY_LSK=ЛСК:
+OPTION_CUSTOM_KEY_RSK=ПСК:
+OPTION_CUSTOM_KEY_MIDDLE=Центр:
+OPTION_CUSTOM_KEY_UP=Вверх:
+OPTION_CUSTOM_KEY_DOWN=Вниз:
+OPTION_CUSTOM_KEY_LEFT=Влево:
+OPTION_CUSTOM_KEY_RIGHT=Вправо:
+
+OPTION_KEYMAP_CONTROLLER=Контроллер:
+OPTION_KEYMAP_REFRESH=Обновить
+OPTION_KEYMAP_KEY_CACHE=Кэш событий
+OPTION_KEYMAP_LSK=ЛСК:
+OPTION_KEYMAP_RSK=ПСК:
+OPTION_KEYMAP_NUM_1=Num_1:
+OPTION_KEYMAP_NUM_2=Num_2:
+OPTION_KEYMAP_NUM_3=Num_3:
+OPTION_KEYMAP_NUM_4=Num_4:
+OPTION_KEYMAP_NUM_5=Num_5:
+OPTION_KEYMAP_NUM_6=Num_6:
+OPTION_KEYMAP_NUM_7=Num_7:
+OPTION_KEYMAP_NUM_8=Num_8:
+OPTION_KEYMAP_NUM_9=Num_9:
+OPTION_KEYMAP_NUM_0=Num_0:
+OPTION_KEYMAP_KEY_*=Key *:
+OPTION_KEYMAP_KEY_#=Key #:
+OPTION_KEYMAP_PAD_LEFT=Влево:
+OPTION_KEYMAP_PAD_RIGHT=Вправо:
+OPTION_KEYMAP_PAD_UP=Вверх:
+OPTION_KEYMAP_PAD_DOWN=Вниз:
+OPTION_KEYMAP_PAD_MIDDLE=Центр:
+OPTION_KEYMAP_CLEAR=Очистить
+OPTION_KEYMAP_RESET=Ресет
+
+OPTION_FONT_DEFAULT_FONT=Шрифт:
+OPTION_FONT_LARGE_SIZE=Большой:
+OPTION_FONT_MIDDLE_SIZE=Средний:
+OPTION_FONT_SMALL_SIZE=Мелкий:
+OPTION_FONT_TEST_TEXT=Пример:
+OPTION_FONT_TEST_TEXT_TXT=This is an Example.
+
+OPTION_SYSTEM_UI_LANGUAGE=Язык интерфейса:
+OPTION_SYSTEM_UPDATE_BRANCH=Ветка обновлений:
+OPTION_SYSTEM_AUTO_UPDATES=Автоматически проверять наличие обновлений
+OPTION_SYSTEM_XRAY_BG=X-Ray View: OverLap images.
+OPTION_SYSTEM_XRAY_CLIP=X-Ray View: Show image clipping region.
+OPTION_SYSTEM_INFO_COLOR=Info View: Показывать цвет в формате (R,G,B).
+OPTION_SYSTEM_RELEASED_IMG=Memory View: Запоминать удаленные изобр.
+OPTION_SYSTEM_AUTOGEN_JAD=Генерировать \"KEmu-Platform\".
+OPTION_SYSTEM_TRACK_NEW=Отслеживать операции \"new/new[]...\".
+OPTION_SYSTEM_TRACK_METHOD=Отслеживать вызовы методов
+OPTION_SYSTEM_DISCORD_RICHPRESENCE=Discord Rich Presence
+OPTION_SYSTEM_AWT_ANTIALIASING=Сглаживание AWT
+OPTION_SYSTEM_TEXT_ANTIALIASING=Сглаживание текста
+OPTION_SYSTEM_FPS_COUNT=Счетчик FPS
+
+OPTION_COREAPI_VIBRATION=Включить вибрацию
+OPTION_COREAPI_KEY_REPEAT=Включить Canvas.keyRepeated().
+OPTION_COREAPI_FULLSCREEN=Игнорировать Canvas.setFullScreenMode().
+OPTION_COREAPI_NO_NETWORK=Отключить доступ к сети
+OPTION_COREAPI_SYNC_KEYEVENTS=Синхронизировать события клавиш
+OPTION_COREAPI_SOFTKEY_FIX=Отправлять keyPressed вместе с commandAction
+OPTION_COREAPI_IGNORE_REGION_REPAINT=Всегда перерисовывать экран полностью
+OPTION_COREAPI_KEYPRESS_ON_REPEAT=Отправлять keyPressed вместо повторов
+OPTION_COREAPI_FORCE_SERVICE_REPAINTS=Force paint on serviceRepaints()
+OPTION_COREAPI_POINTER_EVENTS=Возвращаемое значение Canvas.hasPointerEvents()
+OPTION_COREAPI_ASYNC_FLUSH=Async flush
+
+OPTION_RECORDS_RMS_FOLDER=Папка RMS:
+OPTION_RECORDS_RMS_TEXT=Записи текущего мидлета:
+OPTION_RECORDS_SELECT_ALL=Выбрать все
+OPTION_RECORDS_CLEAR_RECORD=Удалить выбранное
+OPTION_RECORDS_OPEN_DIRECTORY=Выбор папки для RMS
+OPTION_RECORDS_CHOOSE_DIR=Выберите папку
+
+OPTION_NETWORK_PROXY=Прокси
+OPTION_NETWORK_PROXY_TYPE=Тип прокси:
+OPTION_NETWORK_HOST=Хост:
+OPTION_NETWORK_PORT=Порт:
+OPTION_NETWORK_USERNAME=Логин:
+OPTION_NETWORK_PASSWORD=Пароль:
+OPTION_NETWORK_DOMAIN=Домен:
+OPTION_NETWORK_CONNECT=Проверить
+
+OPTION_NETWORK_PROXY_TEST=Proxy Test
+OPTION_NETWORK_PROXY_EMPTY=Пустой хост!
+OPTION_NETWORK_PROXY_UNIMP=Proxy test is underimplemented!
+
+OPTION_MEDIA_VLC_DIR=Путь к VLC
+OPTION_MEDIA_VMS=Использовать VirtualMIDISynth как MIDI устройство
+OPTION_MEDIA_GLOBAL_MIDI=Проигрывание только одного MIDI за раз (меньше лагов)
+OPTION_MEDIA_REOPEN_MIDI=Каждый раз переоткрывать MIDI устройство
+OPTION_MEDIA_DUMP=Включить экспорт медиа (больше исп. памяти)
+OPTION_MEDIA_OTT=Проигрывать Nokia Tone (не стабильно)
+
+OPTION_M3G_LWJGL_SETTINGS=Настройки LWJGL
+OPTION_M3G_IGNORE_OVERWRITE=Игнорировать флаг OVERWRITE
+OPTION_M3G_FORCE_PERSPECTIVE_CORRECTION=Принудительно использовать перспективную коррекцию
+OPTION_M3G_DISABLE_LIGHT_CLAMPING=Отключить ограничение яркости света
+OPTION_M3G_FLUSH_IMMEDIATELY=Сразу обновлять содержимое (медленно!)
+OPTION_M3G_THREAD=Однопоточный M3G
+
+OPTION_M3G_AA=Сглаживание:
+OPTION_M3G_APP_CONTROLLED=Использовать параметры приложения
+OPTION_M3G_FORCE_OFF=Принудительно выкл.
+OPTION_M3G_FORCE_ON=Принудительно вкл.
+
+OPTION_M3G_TEXTURE_FILTER=Фильтрация текстур:
+OPTION_M3G_FORCE_NEAREST=Принудительный фильтр ближайшего соседа
+OPTION_M3G_FORCE_LINEAR=Принудительный линейный фильтр
+
+OPTION_M3G_MIPMAPPING=Мипмаппинг:
+OPTION_M3G_FORCE_BILINEAR=Принудительная билинейная фильтрация
+OPTION_M3G_FORCE_TRILINEAR=Принудительная трилинейная фильтрация
+OPTION_M3G_FORCE_ANISO_2X=Принудительная анизотропная фильтрация 2x
+OPTION_M3G_FORCE_ANISO_4X=Принудительная анизотропная фильтрация 4x
+OPTION_M3G_FORCE_ANISO_8X=Принудительная анизотропная фильтрация 8x
+OPTION_M3G_FORCE_ANISO_16X=Принудительная анизотропная фильтрация 16x
+
+OPTION_MASCOT_NO_2D_MIXING=No 2D mixing
+OPTION_MASCOT_IGNORE_BACKGROUND=Ignore background
+OPTION_MASCOT_TEXTURE_FILTER=Texture filter
+OPTION_MASCOT_BACKGROUND_FILTER=Background filter
+
+OPTION_SECURITY_ENABLE=Включить защиту
+OPTION_SECURITY_PERMISSIONS=Разрешения
+
+#Message
+
+MESSAGE_BOX_TITLE=KEmulator
+
+LOAD_CLASSES_ERROR=Не удалось загрузить классы! Проверьте параметры запуска.
+LOAD_MIDLET_ERROR=Не удалось найти класс мидлета. Проверьте jad дескриптор и параметры запуска.
+FAIL_LAUNCH_MIDLET=Не удалось запустить класс мидлета:
+
+LOAD_ZIP_ERROR=Файл не является ZIP архивом.
+
+LOAD_GDIPLUS_ERROR=Не удалось загрузить gdiplus.dll
+
+PLATFORMREQUEST_ALERT=Приложение хочет открыть URL
+PLATFORMREQUEST_VLC_ALERT=Приложение хочет открыть URL в VLC
+
+PERMISSION_CAMERA=Разрешить приложению использовать камеру?
+
+SECURITY_ALERT_TITLE=Безопасность
+
+SCREEN_SIZE_DIALOG_TITLE=Изменение размера экрана
+
+START_MIDLET_CHOICE_TITLE=Выбор MIDlet'а для запуска
+
+UPDATE_TITLE=Обновление KEmulator
+START_AUTO_UPDATE_TEXT=Вы хотите получать автоматические обновления?
+UPDATE_ALREADY_LATEST_TEXT=You already have the latest version of KEmulator.
+UPDATE_AVAILABLE_TEXT=A new version is available.\nDo you want to download it?
+
+LCDUI_ALERT_DISMISS_COMMAND=Ок
+LCDUI_LIST_SELECT_COMMAND=Выбрать
+LCDUI_MENU_COMMAND=Меню
+
