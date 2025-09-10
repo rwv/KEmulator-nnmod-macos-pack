@@ -1,0 +1,78 @@
+name: Build macOS DMG
+
+on:
+  push:
+    branches: [ "**" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "**" ]
+
+permissions:
+  contents: write
+
+env:
+    KEMULATOR_VERSION: "2.20"
+
+jobs:
+  pack-macos:
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK (with jpackage)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '24'
+
+      - name: Download Kemulator Release
+        run: |
+          curl -L -o kemnnx64.zip "https://github.com/shinovon/KEmulator/releases/download/v${{ env.KEMULATOR_VERSION }}/kemnnx64.v${{ env.KEMULATOR_VERSION }}.zip"
+          unzip kemnnx64.zip
+          ls -la kemnnx64/
+
+      - name: Stage macOS files (exclude Windows/Linux natives and .package)
+        run: |
+          rm -rf "build-mac" "dist"
+          mkdir -p "build-mac" "dist"
+          rsync -a --delete \
+            --exclude='.package' \
+            --exclude='*.dll' \
+            --exclude='*.so' \
+            "$GITHUB_WORKSPACE/kemnnx64/" "$GITHUB_WORKSPACE/build-mac/"
+
+      - name: Build DMG with jpackage
+        env:
+          APP_NAME: KEmulator
+        run: |
+          jpackage --type dmg \
+            --name "$APP_NAME" \
+            --app-version "${KEMULATOR_VERSION}" \
+            --dest "$GITHUB_WORKSPACE/dist" \
+            --input "$GITHUB_WORKSPACE/build-mac" \
+            --main-jar KEmulator.jar \
+            --java-options '-Xmx512M' \
+            --java-options '-Dfile.encoding=UTF-8' \
+            --java-options '-Djava.library.path=$APPDIR/app' \
+            --java-options '--enable-native-access=ALL-UNNAMED' \
+            --vendor 'KEmulator nnmod' \
+            --runtime-image "$JAVA_HOME"
+          echo "Built: dist/${APP_NAME}-${KEMULATOR_VERSION}.dmg"
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: KEmulator-${KEMULATOR_VERSION}-dmg
+          path: dist/*.dmg
+          if-no-files-found: error
+
+    #   - name: Upload release asset (on tag)
+    #     if: startsWith(github.ref, 'refs/tags/')
+    #     uses: softprops/action-gh-release@v2
+    #     with:
+    #       files: dist/*.dmg
+
