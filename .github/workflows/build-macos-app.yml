@@ -10,6 +10,8 @@ on:
 jobs:
   build-macos-app:
     runs-on: macos-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout repository
@@ -23,7 +25,10 @@ jobs:
         
     - name: Download KEmulator release
       run: |
-        wget https://github.com/shinovon/KEmulator/releases/download/v2.20/kemnnx64.v2.20.zip
+        echo "Downloading KEmulator v2.20..."
+        curl -L -o kemnnx64.v2.20.zip https://github.com/shinovon/KEmulator/releases/download/v2.20/kemnnx64.v2.20.zip
+        echo "Download completed, file size:"
+        ls -lh kemnnx64.v2.20.zip
         
     - name: Extract KEmulator
       run: |
@@ -48,20 +53,22 @@ jobs:
         cp kemnnx64/KEmulator.jar jpackage-input/
         
         # Copy all dependency JARs to the input directory
-        cp kemnnx64/*.jar jpackage-input/
-        cp kemnnx64/uei/*.jar jpackage-input/
+        cp kemnnx64/*.jar jpackage-input/ 2>/dev/null || true
+        cp kemnnx64/uei/*.jar jpackage-input/ 2>/dev/null || true
         
         # Copy native libraries for macOS
         cp kemnnx64/*.dylib jpackage-input/ 2>/dev/null || true
         cp kemnnx64/*.jnilib jpackage-input/ 2>/dev/null || true
         
         # Copy language files
-        cp -r kemnnx64/lang jpackage-input/
+        cp -r kemnnx64/lang jpackage-input/ 2>/dev/null || true
         
         echo "=== Input directory contents ==="
         ls -la jpackage-input/
+        echo "=== Total JAR files ==="
+        find jpackage-input/ -name "*.jar" | wc -l
         
-        # Create the macOS app bundle
+        echo "=== Creating macOS app bundle ==="
         jpackage \
           --input jpackage-input/ \
           --name "KEmulator" \
@@ -82,7 +89,15 @@ jobs:
           --java-options "--add-opens=java.base/java.lang.ref=ALL-UNNAMED" \
           --java-options "--add-opens=java.base/java.io=ALL-UNNAMED" \
           --java-options "--add-opens=java.base/java.util=ALL-UNNAMED" \
-          --java-options "--enable-native-access=ALL-UNNAMED"
+          --java-options "--enable-native-access=ALL-UNNAMED" || {
+            echo "jpackage failed with error code $?"
+            echo "=== Checking Java version ==="
+            java -version
+            echo "=== Checking jpackage version ==="
+            jpackage --version 2>/dev/null || echo "jpackage version not available"
+            exit 1
+          }
+        echo "=== macOS app creation completed successfully ==="
         
     - name: List output
       run: |
@@ -94,11 +109,16 @@ jobs:
     - name: Create distribution archive
       run: |
         cd output
-        tar -czf KEmulator-macOS.tar.gz KEmulator.app
+        echo "=== Creating compressed archive ==="
+        tar -czf KEmulator-macOS-v2.20.tar.gz KEmulator.app
+        echo "=== Archive created ==="
+        ls -lh *.tar.gz
+        echo "=== Archive contents preview ==="
+        tar -tzf KEmulator-macOS-v2.20.tar.gz | head -10
         
     - name: Upload macOS app artifact
       uses: actions/upload-artifact@v4
       with:
-        name: KEmulator-macOS-App
-        path: output/KEmulator-macOS.tar.gz
+        name: KEmulator-macOS-App-v2.20
+        path: output/KEmulator-macOS-v2.20.tar.gz
         retention-days: 30
