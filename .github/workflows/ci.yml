@@ -41,23 +41,27 @@ jobs:
 
       - name: Stage macOS files (exclude Windows/Linux natives and .package)
         run: |
-          rm -rf "$GITHUB_WORKSPACE/build-mac" "$GITHUB_WORKSPACE/dist"
-          mkdir -p "$GITHUB_WORKSPACE/build-mac" "$GITHUB_WORKSPACE/dist"
+          rm -rf "./build-mac/"
           rsync -a --delete \
             --exclude='.package' \
             --exclude='*.dll' \
             --exclude='*.so' \
-            "$GITHUB_WORKSPACE/kemnnx64/" "$GITHUB_WORKSPACE/build-mac/"
+            --exclude='*linux*' \
+            --exclude='*windows*' \
+            --exclude='*android*' \
+            --exclude='*win32*' \
+            --exclude='*.sh' \
+            --exclude='*.bat' \
+            "./kemnnx64/" "./build-mac/"
 
       - name: Build .app with jpackage
-        env:
-          APP_NAME: KEmulator
         run: |
+          rm -rf dist
           jpackage --type app-image \
-            --name "$APP_NAME" \
+            --name "KEmulator" \
             --app-version "${KEMULATOR_VERSION}" \
-            --dest "$GITHUB_WORKSPACE/dist" \
-            --input "$GITHUB_WORKSPACE/build-mac" \
+            --dest "dist" \
+            --input "./build-mac" \
             --main-jar KEmulator.jar \
             --java-options '-Xmx512M' \
             --java-options '-Dfile.encoding=UTF-8' \
@@ -65,11 +69,10 @@ jobs:
             --java-options '--enable-native-access=ALL-UNNAMED' \
             --vendor 'KEmulator nnmod' \
             --runtime-image "$JAVA_HOME"
-          echo "Built: dist/${APP_NAME}.app"
 
       - name: Create app bundle zip
         run: |
-          cd "$GITHUB_WORKSPACE/dist"
+          cd dist
           zip -r "KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip" KEmulator.app/
 
       - name: Upload app bundle artifact
