@@ -1,4 +1,4 @@
-name: Build macOS DMG
+name: Build macOS App
 
 on:
   push:
@@ -45,11 +45,11 @@ jobs:
             --exclude='*.so' \
             "$GITHUB_WORKSPACE/kemnnx64/" "$GITHUB_WORKSPACE/build-mac/"
 
-      - name: Build DMG with jpackage
+      - name: Build .app with jpackage
         env:
           APP_NAME: KEmulator
         run: |
-          jpackage --type dmg \
+          jpackage --type app-image \
             --name "$APP_NAME" \
             --app-version "${KEMULATOR_VERSION}" \
             --dest "$GITHUB_WORKSPACE/dist" \
@@ -61,13 +61,18 @@ jobs:
             --java-options '--enable-native-access=ALL-UNNAMED' \
             --vendor 'KEmulator nnmod' \
             --runtime-image "$JAVA_HOME"
-          echo "Built: dist/${APP_NAME}-${KEMULATOR_VERSION}.dmg"
+          echo "Built: dist/${APP_NAME}.app"
 
-      - name: Upload DMG artifact
+      - name: Create app bundle zip
+        run: |
+          cd "$GITHUB_WORKSPACE/dist"
+          zip -r "KEmulator-${{ env.KEMULATOR_VERSION }}-macos.app.zip" KEmulator.app/
+
+      - name: Upload app bundle artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KEmulator-${KEMULATOR_VERSION}-dmg
-          path: dist/*.dmg
+          name: KEmulator-v${{ env.KEMULATOR_VERSION }}-macos.app.zip
+          path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos.app.zip
           if-no-files-found: error
 
     #   - name: Upload release asset (on tag)
