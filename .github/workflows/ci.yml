@@ -37,8 +37,8 @@ jobs:
 
       - name: Stage macOS files (exclude Windows/Linux natives and .package)
         run: |
-          rm -rf "build-mac" "dist"
-          mkdir -p "build-mac" "dist"
+          rm -rf "$GITHUB_WORKSPACE/build-mac" "$GITHUB_WORKSPACE/dist"
+          mkdir -p "$GITHUB_WORKSPACE/build-mac" "$GITHUB_WORKSPACE/dist"
           rsync -a --delete \
             --exclude='.package' \
             --exclude='*.dll' \
