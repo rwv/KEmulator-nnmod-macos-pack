@@ -16,6 +16,9 @@ env:
 jobs:
   pack-macos:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [x64, aarch64]
     defaults:
       run:
         shell: bash
@@ -26,8 +29,9 @@ jobs:
       - name: Set up Temurin JDK (with jpackage)
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: 'temurin'
           java-version: '24'
+          architecture: ${{ matrix.arch }}
 
       - name: Download Kemulator Release
         run: |
@@ -66,13 +70,13 @@ jobs:
       - name: Create app bundle zip
         run: |
           cd "$GITHUB_WORKSPACE/dist"
-          zip -r "KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-arm64.app.zip" KEmulator.app/
+          zip -r "KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip" KEmulator.app/
 
       - name: Upload app bundle artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-arm64.app.zip
-          path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-arm64.app.zip
+          name: KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
+          path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
           if-no-files-found: error
 
     #   - name: Upload release asset (on tag)
