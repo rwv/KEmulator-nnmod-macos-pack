@@ -101,7 +101,8 @@ jobs:
           --java-options "--add-opens=java.base/java.lang.ref=ALL-UNNAMED" \
           --java-options "--add-opens=java.base/java.io=ALL-UNNAMED" \
           --java-options "--add-opens=java.base/java.util=ALL-UNNAMED" \
-          --java-options "--enable-native-access=ALL-UNNAMED" || {
+          --java-options "--enable-native-access=ALL-UNNAMED" \
+          --java-options "-javaagent:\$APPDIR/KEmulator.jar" || {
             echo "jpackage failed with error code $?"
             echo "=== Checking Java version ==="
             java -version
