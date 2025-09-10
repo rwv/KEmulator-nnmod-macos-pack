@@ -44,11 +44,14 @@ jobs:
         echo "=== Looking for main executable ==="
         find kemnnx64/ -name "*.jar" -o -name "*.sh" -o -name "*.bat"
         
-    - name: Create macOS app with jpackage
+    - name: Prepare jpackage input directory
       run: |
         echo "=== Preparing jpackage input directory ==="
         mkdir -p jpackage-input
         
+    - name: Copy JAR files and dependencies
+      run: |
+        echo "=== Copying JAR files ==="
         # Copy KEmulator.jar as the main jar
         cp kemnnx64/KEmulator.jar jpackage-input/
         
@@ -56,18 +59,27 @@ jobs:
         cp kemnnx64/*.jar jpackage-input/ 2>/dev/null || true
         cp kemnnx64/uei/*.jar jpackage-input/ 2>/dev/null || true
         
+        echo "=== JAR files copied ==="
+        find jpackage-input/ -name "*.jar" | wc -l
+        
+    - name: Copy native libraries
+      run: |
+        echo "=== Copying native libraries for macOS ==="
         # Copy native libraries for macOS
         cp kemnnx64/*.dylib jpackage-input/ 2>/dev/null || true
         cp kemnnx64/*.jnilib jpackage-input/ 2>/dev/null || true
         
+    - name: Copy additional resources
+      run: |
+        echo "=== Copying additional resources ==="
         # Copy language files
         cp -r kemnnx64/lang jpackage-input/ 2>/dev/null || true
         
         echo "=== Input directory contents ==="
         ls -la jpackage-input/
-        echo "=== Total JAR files ==="
-        find jpackage-input/ -name "*.jar" | wc -l
         
+    - name: Create macOS app with jpackage
+      run: |
         echo "=== Creating macOS app bundle ==="
         jpackage \
           --input jpackage-input/ \
