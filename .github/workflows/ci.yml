@@ -41,9 +41,8 @@ jobs:
 
       - name: Replace with lateset swt library
         run: |
-          cd kemnnx64
-          curl -L -o swt-macosx-aarch64.jar https://repo1.maven.org/maven2/org/eclipse/platform/org.eclipse.swt.cocoa.macosx.aarch64/3.131.0/org.eclipse.swt.cocoa.macosx.aarch64-3.131.0.jar
-          curl -L -o swt-macosx-x86_64.jar https://repo1.maven.org/maven2/org/eclipse/platform/org.eclipse.swt.cocoa.macosx.x86_64/3.131.0/org.eclipse.swt.cocoa.macosx.x86_64-3.131.0.jar
+          curl -L -o kemnnx64/swt-macosx-aarch64.jar https://repo1.maven.org/maven2/org/eclipse/platform/org.eclipse.swt.cocoa.macosx.aarch64/3.131.0/org.eclipse.swt.cocoa.macosx.aarch64-3.131.0.jar
+          curl -L -o kemnnx64/swt-macosx-x86_64.jar https://repo1.maven.org/maven2/org/eclipse/platform/org.eclipse.swt.cocoa.macosx.x86_64/3.131.0/org.eclipse.swt.cocoa.macosx.x86_64-3.131.0.jar
 
       - name: Fix lwjgl natives for macos x64
         run: |
