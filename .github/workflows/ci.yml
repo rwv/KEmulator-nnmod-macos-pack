@@ -79,6 +79,14 @@ jobs:
             --exclude='*arm64*' \
             "./kemnnx64/" "./build-mac/"
 
+      - name: Fix lwjgl natives for macos x64
+        if: matrix.arch == 'x64'
+        run: |
+          cp ./build-mac/lwjgl-glfw-natives-macos.jar ./build-mac/lwjgl-glfw-natives-macos-x86.jar
+          cp ./build-mac/lwjgl-natives-macos.jar ./build-mac/lwjgl-natives-macos-x86.jar
+          cp ./build-mac/lwjgl-opengl-natives-macos.jar ./build-mac/lwjgl-opengl-natives-macos-x86.jar
+          cp ./build-mac/lwjgl3-swt-macos.jar ./build-mac/lwjgl3-swt-macos-x86.jar
+
       - name: Use the latest libjinput-osx native library to support macos aarch64
         run: |
           rm ./build-mac/libjinput-osx.dylib ./build-mac/libjinput-osx.jnilib
