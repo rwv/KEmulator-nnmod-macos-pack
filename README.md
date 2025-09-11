@@ -13,7 +13,7 @@ Pre-built macOS app bundles are available in the [Releases](https://github.com/r
 ### Supported Architectures
 
 - **Intel (x64)**: For Intel-based Macs
-- **Apple Silicon (aarch64)**: For M1/M2/M3 Macs
+- **Apple Silicon (aarch64)**: For Apple Silicon Macs
 
 ## Installation
 
