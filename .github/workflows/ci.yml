@@ -19,6 +19,7 @@ jobs:
     strategy:
       matrix:
         arch: [x64, aarch64]
+        extension: [zip, dmg]
     defaults:
       run:
         shell: bash
@@ -98,6 +99,7 @@ jobs:
             "./kemnnx64/" "./build-mac/"
 
       - name: Build .app with jpackage
+        if: matrix.extension == 'zip'
         run: |
           rm -rf dist
           jpackage --type app-image \
@@ -114,19 +116,58 @@ jobs:
             --runtime-image "$JAVA_HOME"
 
       - name: Create app bundle zip
+        if: matrix.extension == 'zip'
         run: |
           cd dist
           zip -r "KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip" KEmulator.app/
 
       - name: Upload app bundle artifact
         uses: actions/upload-artifact@v4
+        if: matrix.extension == 'zip'
         with:
           name: KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
           path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
           if-no-files-found: error
 
       - name: Upload release asset (on tag)
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') && matrix.extension == 'zip'
         uses: softprops/action-gh-release@v2
         with:
           files: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
+
+
+      - name: Build .dmg with jpackage
+        if: matrix.extension == 'dmg'
+        run: |
+          rm -rf dist
+          jpackage --type dmg \
+            --name "KEmulator" \
+            --app-version "${KEMULATOR_VERSION}" \
+            --dest "dist" \
+            --input "./build-mac" \
+            --main-jar KEmulator.jar \
+            --java-options '-Xmx512M' \
+            --java-options '-Dfile.encoding=UTF-8' \
+            --java-options '-Djava.library.path=$APPDIR/app' \
+            --java-options '--enable-native-access=ALL-UNNAMED' \
+            --vendor 'KEmulator nnmod' \
+            --runtime-image "$JAVA_HOME"
+
+      - name: Rename dmg file
+        if: matrix.extension == 'dmg'
+        run: |
+          mv dist/KEmulator-${KEMULATOR_VERSION}.dmg dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.dmg
+
+      - name: Upload dmg artifact
+        uses: actions/upload-artifact@v4
+        if: matrix.extension == 'dmg'
+        with:
+          name: KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.dmg
+          path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.dmg
+          if-no-files-found: error
+
+      - name: Upload release asset (on tag)
+        if: startsWith(github.ref, 'refs/tags/') && matrix.extension == 'dmg'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.dmg
