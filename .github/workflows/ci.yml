@@ -2,16 +2,16 @@ name: Build macOS App
 
 on:
   push:
-    branches: [ "**" ]
-    tags: [ "v*" ]
+    branches: ["**"]
+    tags: ["v*"]
   pull_request:
-    branches: [ "**" ]
+    branches: ["**"]
 
 permissions:
   contents: write
 
 env:
-    KEMULATOR_VERSION: "2.20"
+  KEMULATOR_VERSION: "2.20"
 
 jobs:
   pack-macos:
@@ -29,8 +29,8 @@ jobs:
       - name: Set up Temurin JDK (with jpackage)
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '24'
+          distribution: "temurin"
+          java-version: "24"
           architecture: ${{ matrix.arch }}
 
       - name: Download Kemulator Release
@@ -39,7 +39,8 @@ jobs:
           unzip kemnnx64.zip
           ls -la kemnnx64/
 
-      - name: Stage macOS files (exclude Windows/Linux natives and .package)
+      - name: Stage macOS files for macos aarch64
+        if: matrix.arch == 'aarch64'
         run: |
           rm -rf "./build-mac/"
           rsync -a --delete \
@@ -52,7 +53,37 @@ jobs:
             --exclude='*win32*' \
             --exclude='*.sh' \
             --exclude='*.bat' \
+            --exclude='*x86*' \
+            --exclude='lwjgl-glfw-natives-macos.jar' \
+            --exclude='lwjgl-natives-macos.jar' \
+            --exclude='lwjgl-opengl-natives-macos.jar' \
+            --exclude='lwjgl3-swt-macos.jar' \
+            --exclude='libamrdecoder.dylib' \
             "./kemnnx64/" "./build-mac/"
+
+      - name: Stage macOS files for macos x64
+        if: matrix.arch == 'x64'
+        run: |
+          rm -rf "./build-mac/"
+          rsync -a --delete \
+            --exclude='.package' \
+            --exclude='*.dll' \
+            --exclude='*.so' \
+            --exclude='*linux*' \
+            --exclude='*windows*' \
+            --exclude='*android*' \
+            --exclude='*win32*' \
+            --exclude='*.sh' \
+            --exclude='*.bat' \
+            --exclude='*aarch64*' \
+            --exclude='*arm64*' \
+            "./kemnnx64/" "./build-mac/"
+
+      - name: Use the latest libjinput-osx native library to support macos aarch64
+        run: |
+          rm ./build-mac/libjinput-osx.dylib ./build-mac/libjinput-osx.jnilib
+          curl -L -o osx-plugin-2.0.10-natives-osx.jar "https://repo1.maven.org/maven2/net/java/jinput/osx-plugin/2.0.10/osx-plugin-2.0.10-natives-osx.jar"
+          unzip -j osx-plugin-2.0.10-natives-osx.jar "libjinput-osx.jnilib" -d "./build-mac/"
 
       - name: Build .app with jpackage
         run: |
@@ -82,9 +113,8 @@ jobs:
           path: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
           if-no-files-found: error
 
-    #   - name: Upload release asset (on tag)
-    #     if: startsWith(github.ref, 'refs/tags/')
-    #     uses: softprops/action-gh-release@v2
-    #     with:
-    #       files: dist/*.dmg
-
+      - name: Upload release asset (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/KEmulator-v${{ env.KEMULATOR_VERSION }}-macos-${{ matrix.arch }}.app.zip
