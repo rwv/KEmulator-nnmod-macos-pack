@@ -108,6 +108,7 @@ jobs:
             --dest "dist" \
             --input "./build-mac" \
             --main-jar KEmulator.jar \
+            --icon "icon.icns" \
             --java-options '-Xmx512M' \
             --java-options '-Dfile.encoding=UTF-8' \
             --java-options '-Djava.library.path=$APPDIR/app' \
@@ -145,6 +146,7 @@ jobs:
             --app-version "${KEMULATOR_VERSION}" \
             --dest "dist" \
             --input "./build-mac" \
+            --icon "icon.icns" \
             --main-jar KEmulator.jar \
             --java-options '-Xmx512M' \
             --java-options '-Dfile.encoding=UTF-8' \
